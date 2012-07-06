@@ -25,8 +25,16 @@ describe SplitLine do
     position = 5
     regex = '\A\d{1,2}/\d{1,2}/\d{4} 12:00:00 AM\z' #match 6/17/2008 12:00:00 AM {dates}
     assert @split_line.add_mask(position,regex).must_equal 3
-    position = 5
+    position = 6
     regex = '\A\d{4}-\d{2}-\d{2} d{2}:d{2}:d[2}\.\d{3}\z' #match 2012-02-27 11:31:06.427  {timestamp}
     assert @split_line.add_mask(position,regex).must_equal 4
+  end
+  it "should throw an exception when I add a mask pattern with the same position as an existing one" do
+    position = 2
+    regex = '\A\d+\.\d{6}\z' # match '0.000000'
+    @split_line.add_mask(position,regex)
+    position = 2
+    regex = '\A\d{1,2}/\d{1,2}/\d{4} 12:00:00 AM\z' #match 6/17/2008 12:00:00 AM {dates}
+    assert_raises(DuplicateRegexPositionError) {@split_line.add_mask(position,regex)}
   end
 end
