@@ -1,8 +1,9 @@
 class SplitLine
   def initialize(line,delimiter)
+    @fields = line.strip.split(delimiter)
   end
 
   def size
-    5
+    @fields.length
   end
 end
