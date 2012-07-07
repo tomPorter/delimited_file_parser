@@ -1,3 +1,5 @@
+class RegexPositionOutOfBoundsError < Exception
+end
 class DuplicateRegexPositionError < Exception
 end
 class DelimParser
@@ -9,6 +11,9 @@ class DelimParser
   end
 
   def add_mask(position,regex)
+    unless  (1..@expected_length).include? position
+      raise RegexPositionOutOfBoundsError, "Position #{position} not between 1 and #{@expected_length}"
+    end
     if @marker_fields.include? position
       raise DuplicateRegexPositionError, "Position #{position} already used"
     end
