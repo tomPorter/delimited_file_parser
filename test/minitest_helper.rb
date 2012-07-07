@@ -18,6 +18,10 @@ def good_test_line
   "aaa|123456.000000|000000.123450||04/21/2011 12:00:00 AM|2012-02-27 11:31:06.427\n"
 end
 
+def bad_timestamp_line
+  "aaa|123456.000000|000000.123450||04/21/2011 12:00:00 AM|12345.000000\n"
+end
+
 def good_regex_set
   regexes = []
   regexes << [2,'\A\d+\.\d{6}\z']
