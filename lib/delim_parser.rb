@@ -15,12 +15,23 @@ class DelimParser
     @marker_fields[position] = regex
     @marker_fields.length
   end
+
+  def is_line_ok?(split_line)
+    @marker_fields.each do |position,regex|
+      token = split_line.fields[position-1]
+      unless token.match(/#{regex}/) 
+        return false
+      end
+    end  
+    true
+  end
+
 end
 
 class SplitLine
   attr_accessor :fields
   def initialize(line,delim)
-    @fields = line.split(delim)
+    @fields = line.strip.split(delim)
   end                          
 
   def line_right_size?(expected_size)

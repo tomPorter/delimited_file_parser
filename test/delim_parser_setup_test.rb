@@ -9,18 +9,14 @@ describe DelimParser do
   end
 
   it "should allow me to add several mask patterns" do
-    position = 2
-    regex = '\A\d+\.\d{6}\z' # match '0.000000'
-    assert @delim_parser.add_mask(position,regex).must_equal 1
-    position = 3
-    regex = '\A\d+\.\d{6}\z' # match '0.000000'
-    assert @delim_parser.add_mask(position,regex).must_equal 2
-    position = 5
-    regex = '\A\d{1,2}/\d{1,2}/\d{4} 12:00:00 AM\z' #match 6/17/2008 12:00:00 AM {dates}
-    assert @delim_parser.add_mask(position,regex).must_equal 3
-    position = 6
-    regex = '\A\d{4}-\d{2}-\d{2} d{2}:d{2}:d[2}\.\d{3}\z' #match 2012-02-27 11:31:06.427  {timestamp}
-    assert @delim_parser.add_mask(position,regex).must_equal 4
+    pos,regex = good_regex_set[0]
+    assert @delim_parser.add_mask(pos,regex).must_equal 1
+    pos,regex = good_regex_set[1]
+    assert @delim_parser.add_mask(pos,regex).must_equal 2
+    pos,regex = good_regex_set[2]
+    assert @delim_parser.add_mask(pos,regex).must_equal 3
+    pos,regex = good_regex_set[3]
+    assert @delim_parser.add_mask(pos,regex).must_equal 4
   end
 
   it "should throw an exception when I add a mask pattern with the same position as an existing one" do
