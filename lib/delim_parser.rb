@@ -1,3 +1,4 @@
+require 'csv'
 class RegexPositionOutOfBoundsError < Exception
 end
 class DuplicateRegexPositionError < Exception
@@ -22,6 +23,7 @@ class DelimParser
   end
 
   def is_line_ok?(split_line)
+    return false if @expected_length != split_line.fields.length
     @marker_fields.each do |position,regex|
       token = split_line.fields[position-1]
       unless token.match(/#{regex}/) 
@@ -30,13 +32,17 @@ class DelimParser
     end  
     true
   end
+  
+  def repair(split_line)
+    CSV.generate_line(split_line.fields,{:col_sep => @delimiter})
+  end
 
 end
 
 class SplitLine
   attr_accessor :fields
   def initialize(line,delim)
-    @fields = line.strip.split(delim)
+    @fields = CSV.parse_line(line,{:col_sep => delim})
   end                          
 
   def line_right_size?(expected_size)

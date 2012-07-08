@@ -14,8 +14,20 @@ Turn.config do |c|
  #c.natural = true
 end
 
+def extra_after_first_test_line
+  "aaa|bbb|123456.000000|000000.123450||04/21/2011 12:00:00 AM|2012-02-27 11:31:06.427\n"
+end
+
 def good_test_line
   "aaa|123456.000000|000000.123450||04/21/2011 12:00:00 AM|2012-02-27 11:31:06.427\n"
+end
+
+def good_w_quoted_field_line
+  "\"aaa|bbb\"|123456.000000|000000.123450||04/21/2011 12:00:00 AM|2012-02-27 11:31:06.427\n"
+end
+
+def too_long_test_line
+  "aaa|123456.000000|000000.123450||04/21/2011 12:00:00 AM|2012-02-27 11:31:06.427|extra_field\n"
 end
 
 def bad_timestamp_line
