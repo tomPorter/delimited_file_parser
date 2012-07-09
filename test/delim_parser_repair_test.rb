@@ -17,4 +17,11 @@ describe "DelimParser repair" do
     @delim_parser.repair(split_line).must_equal good_w_quoted_field_line
   end
 
+  it 'Can find next mismatch' do
+    line = extra_after_first_test_line
+    split_line = SplitLine.new(line,'|')
+    @delim_parser.find_next_mismatch(split_line).must_equal 2
+    @delim_parser.last_field_pos.must_equal 2
+  end
+
 end
